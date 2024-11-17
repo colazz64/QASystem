@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Interaction</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-100 flex">
+    <div class="w-2/3 p-8">
+        <h1 class="text-purple-600 text-2xl font-semibold mb-4">Document Viewer</h1>
+        <iframe src="{{ pdf_url }}" class="w-full h-screen border-none"></iframe>
+    </div>
+    <div class="w-1/3 bg-white p-6 shadow-md">
+        <h2 class="text-lg font-bold mb-4">Summary</h2>
+        <p class="mb-6">{{ summary }}</p>
+        
+        <h2 class="text-lg font-bold mb-4">Suggested Questions</h2>
+        <ul class="list-disc pl-5 mb-6">
+            {% for question in suggested_questions %}
+            <li>{{ question }}</li>
+            {% endfor %}
+        </ul>
+
+        <h2 class="text-lg font-bold mb-4">Ask a Question</h2>
+        <form id="questionForm" method="post">
+            <input 
+                id="userQuestion" 
+                type="text" 
+                name="question" 
+                placeholder="Ask any question..." 
+                class="w-full border border-gray-300 rounded-md p-2 mb-4" 
+            />
+            <button 
+                type="submit" 
+                class="bg-purple-600 text-white py-2 px-4 rounded-md w-full hover:bg-purple-700 transition duration-300"
+            >
+                Ask
+            </button>
+        </form>
+        
+        <!-- Error Message -->
+        {% if error %}
+        <div class="mt-4 bg-red-100 p-4 rounded-lg shadow-md text-red-800">
+            <p><strong>Error:</strong> {{ error }}</p>
+        </div>
+        {% endif %}
+        
+        <!-- Answer Display -->
+        {% if answer %}
+        <div id="answerContainer" class="mt-4 bg-gray-100 p-4 rounded-lg shadow-md text-blue-800">
+            <p><strong>Answer:</strong> {{ answer }}</p>
+        </div>
+        {% endif %}
+    </div>
+    <script src="/static/script.js"></script>
+</body>
+</html>
